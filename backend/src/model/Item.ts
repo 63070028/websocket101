@@ -22,3 +22,9 @@ export class Item{
         this.qty = qty;
     }
 }
+
+export interface AddItemRequest{
+    name: string;
+    price: number;
+    qty: number;
+}

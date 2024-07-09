@@ -1,6 +1,23 @@
+<script src="item-list/service/item.service.ts"></script>
 <div class="m-10">
   <div class="text-center my-5 font-bold text-3xl">WebSocket Get RealTime Items</div>
-  <div class="grid grid-cols-5 gap-4">
-    <app-item-list *ngFor="let item of items" [item]="item"/>
+
+  <button class="bg-green-600 text-white text-xl px-3 py-1 my-2 rounded" (click)="isOpen = !isOpen">Add</button>
+  <div *ngIf="isOpen" class="border-2 border-gray-300 p-3 my-2 w-max" [formGroup]="itemForm">
+    <div class="grid grid-cols-2 gap-y-2">
+      <label for="itemName">name: </label>
+      <input type="text" id="itemName" class="border border-gray-300 rounded" formControlName="name">
+
+      <label for="itemPrice">price: </label>
+      <input type="number" id="itemPrice" class="border border-gray-300 rounded" formControlName="price">
+
+      <label for="itemQty">qty: </label>
+      <input type="number" id="itemQty" class="border border-gray-300 rounded" formControlName="qty">
+    </div>
+    <button class="w-full bg-green-600 text-white mt-3 rounded" (click)="onSubmit()">submit</button>
+  </div>
+
+  <div class="grid grid-cols-8 gap-4">
+    <app-item-list *ngFor="let item of items" [item]="item" (removeItem)="remove($event)"/>
   </div>
 </div>
