@@ -1,6 +1,6 @@
 import dotnev from "dotenv";
 import WebSocket from 'ws';
-import { AddItemRequest, Item} from "./model/Item";
+import { AddItemRequest, EditItemRequest, Item} from "./model/Item";
 import { AppDataSource, initSubscriber } from "./data-source";
 import { ItemService } from "./service/ItemService";
 import express, { Request, Response } from "express";
@@ -33,6 +33,15 @@ app.delete("/:id", async (req:Request, res:Response<Item>) => {
   .catch(error => {
      console.log(error);
      res.status(404).send(error);
+  })
+});
+
+app.put("/", async (req:Request<EditItemRequest>, res:Response<Item>) => {
+  await itemService.edit(req.body)
+  .then(item => res.send(item))
+  .catch(error => {
+     console.log(error);
+     res.status(500).send(error);
   })
 });
 

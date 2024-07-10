@@ -28,3 +28,10 @@ export interface AddItemRequest{
     price: number;
     qty: number;
 }
+
+export interface EditItemRequest{
+    id:number;
+    name: string;
+    price: number;
+    qty: number;
+}

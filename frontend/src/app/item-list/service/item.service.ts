@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AddItemPayload, Item} from "../model/item";
+import {AddItemPayload, EditItemPayload, Item} from "../model/item";
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
@@ -8,7 +8,12 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ItemService {
   private socket: WebSocket;
-  private itemsSubject: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  private itemsSubject: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([
+    // {id:1, name:"Item1", price:100, qty:1},
+    // {id:2, name:"Item2", price:102, qty:1},
+    // {id:3, name:"Item3", price:103, qty:1},
+    // {id:4, name:"Item4", price:104, qty:1},
+  ]);
   constructor(private http: HttpClient) {
     this.socket = new WebSocket("ws://localhost:8001");
 
@@ -31,5 +36,9 @@ export class ItemService {
 
   public removeItem(payload:number){
     this.http.delete(`http://localhost:8000/${payload}`).subscribe(res => console.log(res));
+  }
+
+  public editItem(payload:EditItemPayload){
+    this.http.put("http://localhost:8000", payload).subscribe(res => console.log(res));
   }
 }
